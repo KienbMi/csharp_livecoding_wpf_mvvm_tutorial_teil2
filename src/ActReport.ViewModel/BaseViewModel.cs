@@ -2,13 +2,20 @@
 
 namespace ActReport.ViewModel
 {
-  public class BaseViewModel : INotifyPropertyChanged
-  {
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged(string propertyName)
+    public class BaseViewModel : INotifyPropertyChanged
     {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected IController _controller;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public BaseViewModel(IController controller)
+        {
+            _controller = controller;
+        }
     }
-  }
 }

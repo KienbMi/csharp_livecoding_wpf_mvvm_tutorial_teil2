@@ -11,7 +11,6 @@ namespace ActReport.UI
     public MainWindow()
     {
       InitializeComponent();
-      DataContext = new EmployeeViewModel();
     }
   }
 }

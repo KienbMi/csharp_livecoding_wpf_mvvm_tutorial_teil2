@@ -11,27 +11,29 @@
          <vm:EmployeeViewModel></vm:EmployeeViewModel>
      </Window.DataContext> 
      -->
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"></RowDefinition>
-      <RowDefinition Height="Auto"></RowDefinition>
-      <RowDefinition></RowDefinition>
-    </Grid.RowDefinitions>
-    <Button Height="30" Command="{Binding CmdSaveChanges}">Änderung speichern</Button>
-    <UniformGrid Grid.Row="1" Rows="2" Columns="2">
-      <TextBlock>Vorname:</TextBlock>
-      <TextBox Text="{Binding FirstName}"></TextBox>
-      <TextBlock>Nachname:</TextBlock>
-      <TextBox Text="{Binding LastName}"></TextBox>
-    </UniformGrid>
-    <ListView SelectedItem="{Binding SelectedEmployee}" Grid.Row="2" ItemsSource="{Binding Employees}">
-      <ListView.View>
-        <GridView>
-          <GridViewColumn Width="120" Header="Vorname" DisplayMemberBinding="{Binding FirstName}"></GridViewColumn>
-          <GridViewColumn Width="120" Header="Nachname" DisplayMemberBinding="{Binding LastName}"></GridViewColumn>
-        </GridView>
-      </ListView.View>
-    </ListView>
-  </Grid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Height="30" Command="{Binding CmdSaveChanges}">Änderung speichern</Button>
+        <UniformGrid Grid.Row="1" Rows="2" Columns="2">
+            <TextBlock>Vorname:</TextBlock>
+            <TextBox Text="{Binding FirstName}"></TextBox>
+            <TextBlock>Nachname:</TextBlock>
+            <TextBox Text="{Binding LastName}"></TextBox>
+        </UniformGrid>
+        <ListView SelectedItem="{Binding SelectedEmployee}" Grid.Row="2" ItemsSource="{Binding Employees}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="120" Header="Vorname" DisplayMemberBinding="{Binding FirstName}"></GridViewColumn>
+                    <GridViewColumn Width="120" Header="Nachname" DisplayMemberBinding="{Binding LastName}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Grid.Row="3" Command="{Binding CmdEditActivities}">Tätigkeiten bearbeiten</Button>
+    </Grid>
 </Window>
 

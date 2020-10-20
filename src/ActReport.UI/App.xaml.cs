@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActReport.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,6 +13,11 @@ namespace ActReport.UI
   /// Interaction logic for App.xaml
   /// </summary>
   public partial class App : Application
-  {
-  }
+    {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            IController controller = new MainController();
+            controller.ShowWindow(new EmployeeViewModel(controller));
+        }
+    }
 }
