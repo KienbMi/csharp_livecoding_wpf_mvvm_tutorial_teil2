@@ -17,7 +17,7 @@
             <TextBlock>Tätigkeiten des Mitarbeiters</TextBlock>
             <TextBlock Foreground="DarkGreen" Text="{Binding FullName}"></TextBlock>
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Activities}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Activities}" AutoGenerateColumns="False" CanUserAddRows="False" SelectedItem="{Binding SelectedActivity}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Datum" MinWidth="110" IsReadOnly="True">
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -40,5 +40,10 @@
                      UpdateSourceTrigger=LostFocus}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
+        <UniformGrid Grid.Row="2"   Columns="3">
+            <Button Command="{Binding CmdEditActivity}">Edit</Button>
+            <Button Command="{Binding CmdNewActivity}">New</Button>
+            <Button Command="{Binding CmdDeleteActivity}">Delete</Button>
+        </UniformGrid>
     </Grid>
 </Window>

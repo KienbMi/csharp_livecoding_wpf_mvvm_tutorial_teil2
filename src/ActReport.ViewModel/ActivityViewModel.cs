@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace ActReport.ViewModel
 {
     public class ActivityViewModel : BaseViewModel
     {
         private Employee _employee;
+        private Activity _selectedActivity;
         private ObservableCollection<Activity> _activities;
 
         public ObservableCollection<Activity> Activities
@@ -21,6 +23,19 @@ namespace ActReport.ViewModel
             {
                 _activities = value;
                 OnPropertyChanged(nameof(Activities));
+            }
+        }
+
+        public Activity SelectedActivity
+        {
+            get
+            {
+                return _selectedActivity;
+            }
+            set
+            {
+                _selectedActivity = value;
+                OnPropertyChanged(nameof(SelectedActivity));
             }
         }
 
@@ -48,7 +63,7 @@ namespace ActReport.ViewModel
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
-                using(IUnitOfWork uow = new UnitOfWork())
+                using (IUnitOfWork uow = new UnitOfWork())
                 {
                     foreach (var item in e.OldItems)
                     {
@@ -56,6 +71,63 @@ namespace ActReport.ViewModel
                     }
                     uow.Save();
                 }
+            }
+        }
+
+        // Commands
+        private ICommand _cmdEditActivity;
+
+        public ICommand CmdEditActivity
+        {
+            get
+            {
+                if (_cmdEditActivity == null)
+                {
+                    _cmdEditActivity = new RelayCommand(
+                        execute: _ => _controller.ShowWindow(new ActivityDetailViewModel(_controller, _employee, SelectedActivity)),
+                        canExecute: _ => SelectedActivity != null);
+                }
+                return _cmdEditActivity;
+            }
+        }
+
+        private ICommand _cmdNewActivity;
+
+        public ICommand CmdNewActivity
+        {
+            get
+            {
+                if (_cmdNewActivity == null)
+                {
+                    _cmdNewActivity = new RelayCommand(
+                        execute: _ => _controller.ShowWindow(new ActivityDetailViewModel(_controller, _employee, null)),
+                        canExecute: _ => true
+                        );
+                }
+                return _cmdNewActivity;
+            }
+        }
+
+        private ICommand _cmdDeleteActivity;
+        public ICommand CmdDeleteActivity 
+        { 
+            get
+            {
+                if (_cmdDeleteActivity == null)
+                {
+                    _cmdDeleteActivity = new RelayCommand(
+                        execute: _ =>
+                        {
+                            using (IUnitOfWork uow = new UnitOfWork())
+                            {
+                                uow.ActivityRepository.Delete(SelectedActivity.Id);
+                                uow.Save();
+                            }
+                            LoadActivities();
+                        },
+                        canExecute: _ => SelectedActivity != null);
+                }
+                return _cmdDeleteActivity;
             }
         }
     }

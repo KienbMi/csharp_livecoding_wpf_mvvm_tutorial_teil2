@@ -18,6 +18,7 @@ namespace ActReport.UI
                 // Wenn viewModel vom Typ EmployeeViewModel ist -> neues MainWindow instanzieren
                 EmployeeViewModel _ => new MainWindow(),
                 ActivityViewModel _ => new ActivityWindow(),
+                ActivityDetailViewModel _ => new ActivityDetailWindow(),
 
                 // default -> InvalidOperationException
                 _ => throw new InvalidOperationException($"Unknown ViewModel of type '{viewModel}'")

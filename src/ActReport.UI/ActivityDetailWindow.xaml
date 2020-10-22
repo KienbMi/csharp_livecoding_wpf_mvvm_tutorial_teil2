@@ -1,0 +1,47 @@
+﻿<Window x:Class="ActReport.UI.ActivityDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ActReport.UI"
+        mc:Ignorable="d"
+        Title="Tätigkeiten Detail" Height="300" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+            <TextBlock>Tätigkeit des Mitarbeiters</TextBlock>
+            <TextBlock Foreground="DarkGreen" Text="{Binding FullName}"></TextBlock>
+            <TextBlock>Tätigkeits ID</TextBlock>
+            <TextBlock Foreground="DarkGreen" Text="{Binding ActivityID}"></TextBlock>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Grid.Column="1">Datum: </TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Date, StringFormat='dd.MM.yyyy'}"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="1">Von:</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding StartTime, StringFormat='HH:mm'}"></TextBox>
+        <TextBlock Grid.Row="4" Grid.Column="1">Bis:</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding EndTime, StringFormat='HH:mm'}"></TextBox>
+        <TextBlock Grid.Row="5" Grid.Column="1">Tätigkeit:</TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="3" MinWidth="300" Text="{Binding ActivityText}"></TextBox>
+        <UniformGrid Grid.Row="7" Grid.Column="1" Columns="2" Grid.ColumnSpan="3">
+            <Button Command="{Binding CmdSaveActivity}">Save</Button>
+            <Button Command="{Binding CmdCancelActivity}">Cancel</Button>
+        </UniformGrid>
+    </Grid>
+</Window>
