@@ -86,18 +86,13 @@ namespace ActReport.ViewModel
                     _cmdEditActivity = new RelayCommand(
                         execute: _ => {
                             var window = new ActivityDetailViewModel(_controller, _employee, SelectedActivity);
-                            window.ActivityIsChanged += ActivityViewModel_ActivityIsChanged;
+                            window.ActivityIsChanged += ActivityIsChanged;
                             _controller.ShowWindow(window);
                              },
                         canExecute: _ => SelectedActivity != null);
                 }
                 return _cmdEditActivity;
             }
-        }
-
-        private void ActivityViewModel_ActivityIsChanged(object sender, EventArgs e)
-        {
-            LoadActivities();
         }
 
         private ICommand _cmdNewActivity;
@@ -109,7 +104,11 @@ namespace ActReport.ViewModel
                 if (_cmdNewActivity == null)
                 {
                     _cmdNewActivity = new RelayCommand(
-                        execute: _ => _controller.ShowWindow(new ActivityDetailViewModel(_controller, _employee, null)),
+                        execute: _ => {
+                            var window = new ActivityDetailViewModel(_controller, _employee, null);
+                            window.ActivityIsChanged += ActivityIsChanged;
+                            _controller.ShowWindow(window);
+                        },
                         canExecute: _ => true
                         );
                 }
@@ -138,6 +137,12 @@ namespace ActReport.ViewModel
                 }
                 return _cmdDeleteActivity;
             }
+        }
+
+
+        private void ActivityIsChanged(object sender, EventArgs e)
+        {
+            LoadActivities();
         }
     }
 }

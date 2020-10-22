@@ -89,7 +89,6 @@ namespace ActReport.ViewModel
             {
                 _activity = new Activity
                 {
-                    Employee = employee,
                     Employee_Id = employee.Id
                 };
             }
