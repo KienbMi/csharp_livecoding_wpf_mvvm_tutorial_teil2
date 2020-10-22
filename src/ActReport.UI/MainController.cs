@@ -8,6 +8,13 @@ namespace ActReport.UI
 {
     public class MainController : IController
     {
+        // Speicherung der Zuordnung zw. ViewModel und Window
+        private Dictionary<BaseViewModel, Window> _windows;
+        public MainController()
+        {
+            _windows = new Dictionary<BaseViewModel, Window>();
+        }
+
         public void ShowWindow(BaseViewModel viewModel)
         {
             Window window = viewModel switch
@@ -24,8 +31,18 @@ namespace ActReport.UI
                 _ => throw new InvalidOperationException($"Unknown ViewModel of type '{viewModel}'")
             };
 
+            _windows[viewModel] = window;
             window.DataContext = viewModel;
             window.ShowDialog();
+        }
+
+        public void CloseWindow(BaseViewModel viewModel)
+        {
+            if (_windows.ContainsKey(viewModel))
+            {
+                _windows[viewModel].Close();
+                _windows.Remove(viewModel);
+            }
         }
     }
 }

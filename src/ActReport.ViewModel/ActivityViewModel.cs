@@ -47,7 +47,7 @@ namespace ActReport.ViewModel
             LoadActivities();
         }
 
-        private void LoadActivities()
+        public void LoadActivities()
         {
             using (IUnitOfWork uow = new UnitOfWork())
             {
@@ -84,11 +84,20 @@ namespace ActReport.ViewModel
                 if (_cmdEditActivity == null)
                 {
                     _cmdEditActivity = new RelayCommand(
-                        execute: _ => _controller.ShowWindow(new ActivityDetailViewModel(_controller, _employee, SelectedActivity)),
+                        execute: _ => {
+                            var window = new ActivityDetailViewModel(_controller, _employee, SelectedActivity);
+                            window.ActivityIsChanged += ActivityViewModel_ActivityIsChanged;
+                            _controller.ShowWindow(window);
+                             },
                         canExecute: _ => SelectedActivity != null);
                 }
                 return _cmdEditActivity;
             }
+        }
+
+        private void ActivityViewModel_ActivityIsChanged(object sender, EventArgs e)
+        {
+            LoadActivities();
         }
 
         private ICommand _cmdNewActivity;

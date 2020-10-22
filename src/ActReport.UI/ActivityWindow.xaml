@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:ActReport.UI"
         mc:Ignorable="d"
         Title="Tätigkeiten" Height="300" Width="600">
@@ -18,6 +19,11 @@
             <TextBlock Foreground="DarkGreen" Text="{Binding FullName}"></TextBlock>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Activities}" AutoGenerateColumns="False" CanUserAddRows="False" SelectedItem="{Binding SelectedActivity}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="RowEditEnding">
+                    <i:InvokeCommandAction Command="{Binding CmdRowEditEnding}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Datum" MinWidth="110" IsReadOnly="True">
                     <DataGridTemplateColumn.CellEditingTemplate>

@@ -17,6 +17,10 @@ namespace ActReport.ViewModel
         private DateTime _endTime;
         private string _activityText;
 
+
+        public event EventHandler ActivityIsChanged;
+
+
         public string FullName => $"{_employee.FirstName} {_employee.LastName}";
 
         public DateTime Date 
@@ -127,13 +131,20 @@ namespace ActReport.ViewModel
                                     uow.ActivityRepository.Update(_activity);
                                 }
                                 uow.Save();
-                            }                        
+                            }
+                            OnActivityIsChanged();
+                            _controller.CloseWindow(this);
                         },
                         canExecute: _ => true
                         );
                 }
                 return _cmdSaveActivity;
             }
+        }
+
+        protected virtual void OnActivityIsChanged()
+        {
+            ActivityIsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         ICommand _cmdCancelActivity;
@@ -144,7 +155,7 @@ namespace ActReport.ViewModel
                 if (_cmdCancelActivity == null)
                 {
                     _cmdCancelActivity = new RelayCommand(
-                        execute: _ => { },
+                        execute: _ => _controller.CloseWindow(this),
                         canExecute: _ => true
                         );
                 }
